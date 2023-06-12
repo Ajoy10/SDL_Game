@@ -1,7 +1,8 @@
 #include "Game.h"
+#include "GameObject.h"
 
-SDL_Texture* playerTexture;
-SDL_Rect sourceRect, destRect;
+GameObject* playerObj;
+GameObject* enemyObj;
 
 int frame;
 
@@ -33,7 +34,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		playerTexture = TextureManager::LoadTexture("assets/player.png", renderer);
+		playerObj = new GameObject("assets/player.png", renderer, 10, 200);
+		enemyObj = new GameObject("assets/enemy_one.png", renderer, 10, 20);
 	}
 	else {
 		isRunning = false;
@@ -57,14 +59,8 @@ void Game::handleEvents() {
 bool done = false;
 void Game::update(float delta) {
 
-	if (destRect.x >= 640 && !done) {
-		std::cout << frame << std::endl;
-		done = true;
-	}
-	
-	destRect.h = 64;
-	destRect.w = 64;
-	destRect.x = destRect.x + (100*delta);
+	playerObj->Update();
+	enemyObj->Update();
 
 	frame++;
 	
@@ -74,7 +70,9 @@ void Game::update(float delta) {
 void Game::render() {
 	SDL_RenderClear(renderer);
 	// Add your renderings here
-	SDL_RenderCopy(renderer, playerTexture, NULL, &destRect);
+	playerObj->Render();
+	enemyObj->Render();
+
 	SDL_RenderPresent(renderer);
 }
 
