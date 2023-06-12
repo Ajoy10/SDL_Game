@@ -58,7 +58,7 @@ Feel free to customize and enhance the game according to your preferences and le
 ## :books: Resources
 
 - [SDL2 Documentation](https://wiki.libsdl.org/)
-- [SDL2_image Documentation](https://www.libsdl.org/projects/SDL_image/docs/)
+- [SDL2_image Documentation](https://wiki.libsdl.org/SDL2_image/FrontPage)
 - [Lazy Foo' Productions SDL2 tutorials](https://lazyfoo.net/tutorials/SDL/index.php)
 - [How To Make A Game In C++ & SDL2 From Scratch! by Let's Make Games](https://youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx)
 
