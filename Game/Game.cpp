@@ -56,12 +56,20 @@ void Game::handleEvents() {
 		break;
 	}
 }
+bool done = false;
+void Game::update(float delta) {
 
-void Game::update() {
+	if (destRect.x >= 640 && !done) {
+		std::cout << frame << std::endl;
+		done = true;
+	}
+	
 	destRect.h = 64;
 	destRect.w = 64;
-	destRect.x = frame % 640;
+	destRect.x = destRect.x + (100*delta);
+
 	frame++;
+	
 
 }
 
