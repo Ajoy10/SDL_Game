@@ -17,9 +17,10 @@ class Game
 		void clean();
 
 		bool running() { return isRunning; }
+
+		static SDL_Renderer* renderer;
 	private:
 		bool isRunning;
 		SDL_Window* window;
-		SDL_Renderer* renderer;
 };
 
