@@ -1,13 +1,15 @@
 #include "Game.h"
 #include "GameObject.h"
+#include "PlayerController.h"
 
-GameObject* playerObj;
+PlayerController* playerObj;
 GameObject* enemyObj;
 
 int frame;
 
 
 SDL_Renderer* Game::renderer = nullptr;
+SDL_Event Game::event;
 
 Game::Game() {
 
@@ -37,7 +39,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		playerObj = new GameObject("assets/player.png", 10, 200);
+		playerObj = new PlayerController("assets/player.png", 10, 200);
 		enemyObj = new GameObject("assets/enemy_one.png", 10, 20);
 	}
 	else {
@@ -46,7 +48,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 }
 
 void Game::handleEvents() {
-	SDL_Event event;
+	
 	SDL_PollEvent(&event);
 
 	switch (event.type)

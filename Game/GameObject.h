@@ -8,8 +8,10 @@ public:
 
 	void Update();
 	void Render();
-private:
+protected:
 	int x, y;
+
+private:
 	SDL_Texture* objectTexture;
 	SDL_Rect srcRect, destRect;
 };
