@@ -33,9 +33,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		SDL_Surface* tempSurface = IMG_Load("assets/player.png");
-		playerTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-		SDL_FreeSurface(tempSurface);
+		playerTexture = TextureManager::LoadTexture("assets/player.png", renderer);
 	}
 	else {
 		isRunning = false;
