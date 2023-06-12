@@ -1,19 +1,19 @@
-#include <SDL.h>
-#include <iostream>
 
+#include "Game.h"
 const int WIDTH = 640, HEIGHT = 480;
 
-int main(int argc, const char* argv[]) {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_Window* window = SDL_CreateWindow("MyGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+Game *game = nullptr;
 
-	SDL_SetRenderDrawColor(renderer, 160, 90, 160, 255);
+int main(int argc, char* argv[]) {
+	
+	game = new Game();
+	game->init("MyEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+	while (game->running()) {
+		game->handleEvents();
+		game->update();
+		game->render();
+	}
 
-	SDL_RenderClear(renderer);
-	SDL_RenderPresent(renderer);
-
-	SDL_Delay(5000);
-
+	game->clean();
 	return 0;
 }

@@ -1,8 +1,7 @@
 #pragma once
-#include <SDL.h>
+#include "SDL.h"
 #include <iostream>
 
-const int WIDTH = 640, HEIGHT = 480;
 class Game
 {
 	public:
@@ -16,7 +15,7 @@ class Game
 		void render();
 		void clean();
 
-		bool running(){return isRunning}
+		bool running() { return isRunning; }
 	private:
 		bool isRunning;
 		SDL_Window* window;
