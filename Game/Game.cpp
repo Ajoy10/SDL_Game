@@ -16,4 +16,14 @@ void Game::handleEvents() {
 
 }
 
-void Game::ha
+void Game::update() {
+
+}
+
+void Game::render() {
+
+}
+
+void Game::clean() {
+
+}

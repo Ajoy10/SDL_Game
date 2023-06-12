@@ -16,7 +16,7 @@ class Game
 		void render();
 		void clean();
 
-		bool running();
+		bool running(){return isRunning}
 	private:
 		bool isRunning;
 		SDL_Window* window;
