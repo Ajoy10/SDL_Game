@@ -1,9 +1,13 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "PlayerController.h"
+#include "EnemyController.h"
+
 
 PlayerController* playerObj;
-GameObject* enemyObj;
+EnemyController* enemyObj1;
+EnemyController* enemyObj2;
+
 
 Uint32 lastTicks;
 
@@ -46,8 +50,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		playerObj = new PlayerController("assets/player.png", 10, 200);
-		enemyObj = new GameObject("assets/enemy_one.png", 10, 20,16, 16, 3.0f);
+		playerObj = new PlayerController("assets/player.png", Game::WIDTH/2, 200);
+		enemyObj1 = new EnemyController("assets/enemy_one.png", Game::WIDTH/2, 20);
+		enemyObj2 = new EnemyController("assets/enemy_one.png", Game::WIDTH / 2 + 64, 20);
+
 	}
 	else {
 		isRunning = false;
@@ -86,7 +92,9 @@ void Game::update() {
 
 
 	playerObj->Update();
-	enemyObj->Update();
+	enemyObj1->Update();
+	enemyObj2->Update();
+
 
 	frame++;
 	
@@ -97,7 +105,9 @@ void Game::render() {
 	SDL_RenderClear(renderer);
 	// Add your renderings here
 	playerObj->Render();
-	enemyObj->Render();
+	enemyObj1->Render();
+	enemyObj2->Render();
+
 
 	SDL_RenderPresent(renderer);
 
