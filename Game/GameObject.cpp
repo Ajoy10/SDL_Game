@@ -1,21 +1,24 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const char* texturesheet, int x, int y) {
+GameObject::GameObject(const char* texturesheet, float x, float y, int textureWidth, int textureHeight, float textureUpscale) {
 	objectTexture = TextureManager::LoadTexture(texturesheet);
 	this->x = x;
 	this->y = y;
+	this->textureWidth = textureWidth;
+	this->textureHeight = textureHeight;
+	this->textureUpscale = textureUpscale;
 }
 
 void GameObject::Update() {
 	
 
-	srcRect.w = 16;
-	srcRect.h = 16;
+	srcRect.w = textureWidth;
+	srcRect.h = textureHeight;
 	srcRect.x = 0;
 	srcRect.y = 0;
 
-	destRect.w = srcRect.w * 2;
-	destRect.h = srcRect.h * 2;
+	destRect.w = srcRect.w * textureUpscale;
+	destRect.h = srcRect.h * textureUpscale;
 	destRect.x = x;
 	destRect.y = y;
 }

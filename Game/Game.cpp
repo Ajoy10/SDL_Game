@@ -1,13 +1,21 @@
 #include "Game.h"
 #include "GameObject.h"
+#include "PlayerController.h"
 
-GameObject* playerObj;
+PlayerController* playerObj;
 GameObject* enemyObj;
+
+Uint32 lastTicks;
+
 
 int frame;
 
+const int Game::WIDTH = 820;
+const int Game::HEIGHT = 640;
 
 SDL_Renderer* Game::renderer = nullptr;
+SDL_Event Game::event;
+float Game::deltaTime;
 
 Game::Game() {
 
@@ -19,6 +27,7 @@ Game::~Game() {
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
+		lastTicks = SDL_GetTicks();
 		std::cout << "SDL initialised!" << std::endl;
 		int flags = 0;
 		if (fullscreen) {
@@ -37,8 +46,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		playerObj = new GameObject("assets/player.png", 10, 200);
-		enemyObj = new GameObject("assets/enemy_one.png", 10, 20);
+		playerObj = new PlayerController("assets/player.png", 10, 200);
+		enemyObj = new GameObject("assets/enemy_one.png", 10, 20,16, 16, 3.0f);
 	}
 	else {
 		isRunning = false;
@@ -46,7 +55,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 }
 
 void Game::handleEvents() {
-	SDL_Event event;
+	Input::SetKeystate();
+
 	SDL_PollEvent(&event);
 
 	switch (event.type)
@@ -58,9 +68,22 @@ void Game::handleEvents() {
 	default:
 		break;
 	}
+
 }
 bool done = false;
-void Game::update(float delta) {
+void Game::update() {
+	// Wait until 2ms has elapsed since last frame
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), lastTicks + 2))
+		;
+	deltaTime = (SDL_GetTicks() - lastTicks)/1000.0f;
+	lastTicks = SDL_GetTicks();
+	std::cout << "Delta: " << deltaTime << std::endl;
+	// Clamp maximum delta time value
+	if (deltaTime > 0.05f)
+	{
+		deltaTime = 0.05f;
+	}
+
 
 	playerObj->Update();
 	enemyObj->Update();
@@ -77,6 +100,8 @@ void Game::render() {
 	enemyObj->Render();
 
 	SDL_RenderPresent(renderer);
+
+
 }
 
 void Game::clean() {
