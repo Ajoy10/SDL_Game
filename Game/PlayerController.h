@@ -10,5 +10,6 @@ public:
     void Update();
 private:
     float movementSpeed;
+    void move(float xInput);
 };
 

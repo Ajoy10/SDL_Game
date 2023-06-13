@@ -10,6 +10,8 @@ Uint32 lastTicks;
 
 int frame;
 
+const int Game::WIDTH = 820;
+const int Game::HEIGHT = 640;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
@@ -45,7 +47,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		isRunning = true;
 
 		playerObj = new PlayerController("assets/player.png", 10, 200);
-		enemyObj = new GameObject("assets/enemy_one.png", 10, 20);
+		enemyObj = new GameObject("assets/enemy_one.png", 10, 20,16, 16, 3.0f);
 	}
 	else {
 		isRunning = false;

@@ -7,7 +7,7 @@ Game *game = nullptr;
 int main(int argc, char* argv[]) {
 	
 	game = new Game();
-	game->init("MyEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+	game->init("MyEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::WIDTH, Game::HEIGHT, false);
 
 	while(game->running()) {
 		

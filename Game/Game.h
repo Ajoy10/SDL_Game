@@ -18,12 +18,15 @@ class Game
 
 		bool running() { return isRunning; }
 
+		const static int WIDTH, HEIGHT;
+
 		static SDL_Renderer* renderer;
 		static SDL_Event event;
 		static float deltaTime;
 	private:
 		bool isRunning;
 		SDL_Window* window;
+		
 		
 };
 
