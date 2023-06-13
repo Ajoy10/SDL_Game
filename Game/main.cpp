@@ -9,12 +9,11 @@ int main(int argc, char* argv[]) {
 	game = new Game();
 	game->init("MyEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 
-	float deltaTime = 0;
 	while(game->running()) {
 		
 		game->handleEvents();
 		
-		game->update(deltaTime);
+		game->update();
 		game->render();
 
 	};

@@ -1,10 +1,11 @@
 #pragma once
 #include "GameObject.h"
+#include "Input.h"
 class PlayerController :
     public GameObject
 {
 public:
-    PlayerController(const char* texturesheet, int x, int y);
+    PlayerController(const char* texturesheet, float x, float y);
 
     void Update();
 private:

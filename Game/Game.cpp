@@ -53,7 +53,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 }
 
 void Game::handleEvents() {
-	
+	Input::SetKeystate();
+
 	SDL_PollEvent(&event);
 
 	switch (event.type)
@@ -65,24 +66,28 @@ void Game::handleEvents() {
 	default:
 		break;
 	}
+
 }
 bool done = false;
-void Game::update(float delta) {
-	// Wait until 16ms has elapsed since last frame
-	while (!SDL_TICKS_PASSED(SDL_GetTicks(), lastTicks + 16))
+void Game::update() {
+	// Wait until 2ms has elapsed since last frame
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), lastTicks + 2))
 		;
 	deltaTime = (SDL_GetTicks() - lastTicks) / 1000.0f;
+	std::cout << "Delta: " << deltaTime << std::endl;
 	// Clamp maximum delta time value
 	if (deltaTime > 0.05f)
 	{
 		deltaTime = 0.05f;
 	}
 
+
 	playerObj->Update();
 	enemyObj->Update();
 
 	frame++;
 	
+	lastTicks = SDL_GetTicks();
 
 }
 
@@ -93,7 +98,6 @@ void Game::render() {
 	enemyObj->Render();
 
 	SDL_RenderPresent(renderer);
-	lastTicks = SDL_GetTicks();
 
 }
 

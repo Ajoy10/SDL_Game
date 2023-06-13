@@ -3,13 +3,13 @@
 class GameObject
 {
 public:
-	GameObject(const char* texturesheet, int x, int y);
+	GameObject(const char* texturesheet, float x, float y);
 	~GameObject();
 
 	void Update();
 	void Render();
 protected:
-	int x, y;
+	float x, y;
 
 private:
 	SDL_Texture* objectTexture;

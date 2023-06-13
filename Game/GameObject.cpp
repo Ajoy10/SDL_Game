@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const char* texturesheet, int x, int y) {
+GameObject::GameObject(const char* texturesheet, float x, float y) {
 	objectTexture = TextureManager::LoadTexture(texturesheet);
 	this->x = x;
 	this->y = y;
