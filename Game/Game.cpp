@@ -73,7 +73,8 @@ void Game::update() {
 	// Wait until 2ms has elapsed since last frame
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), lastTicks + 2))
 		;
-	deltaTime = (SDL_GetTicks() - lastTicks) / 1000.0f;
+	deltaTime = (SDL_GetTicks() - lastTicks)/1000.0f;
+	lastTicks = SDL_GetTicks();
 	std::cout << "Delta: " << deltaTime << std::endl;
 	// Clamp maximum delta time value
 	if (deltaTime > 0.05f)
@@ -87,7 +88,6 @@ void Game::update() {
 
 	frame++;
 	
-	lastTicks = SDL_GetTicks();
 
 }
 
@@ -98,6 +98,7 @@ void Game::render() {
 	enemyObj->Render();
 
 	SDL_RenderPresent(renderer);
+
 
 }
 
