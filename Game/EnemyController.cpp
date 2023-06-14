@@ -1,6 +1,9 @@
 #include "EnemyController.h"
 
 const float EnemyController::xTravel = Game::WIDTH/4;
+const int EnemyController::horizontalMovementTriggerCount = 3;
+
+
 
 EnemyController::EnemyController(const char* texturesheet, float x, float y) :GameObject(texturesheet, x, y, 15, 15, 2.0f), xStart(x) {
 	movementSpeed = 100.0f;
@@ -39,6 +42,11 @@ void EnemyController::move() {
 	else if (x <= left_limit) {
 		x = left_limit;
 		direction = 1;
+		horizontalMovementCounter++;
+	}
 
+	if (horizontalMovementCounter >= EnemyController::horizontalMovementTriggerCount) {
+		y += textureHeight*textureUpscale;
+		horizontalMovementCounter = 0;
 	}
 }

@@ -11,6 +11,8 @@ public:
 private:
     float movementSpeed;
     short int direction = 1;
+    short int horizontalMovementCounter = 0;
+    static const int horizontalMovementTriggerCount;
     const float xStart;
     static const float xTravel;
     void move();
