@@ -19,12 +19,20 @@ PlayerController::PlayerController(const char* texturesheet, float x, float y) :
 
 	 if (Input::GetKeyDown(SDL_SCANCODE_SPACE)) {
 		 std::cout << " SPACE pressed" << std::endl;
-
+		 weapon.Shoot(x+(textureWidth * textureUpscale)/3.5f, y, 0.0f, -100.0f);
 	 }
 	 move(xInput);
+	 weapon.Update();
 	GameObject::Update();
 	
 }
+
+ void PlayerController::Render() {
+	 GameObject::Render();
+	 weapon.Render();
+ }
+
+
 
  void PlayerController::move(float xInput) {
 	 x += xInput * movementSpeed * Game::deltaTime;

@@ -9,6 +9,16 @@ GameObject::GameObject(const char* texturesheet, float x, float y, int textureWi
 	this->textureUpscale = textureUpscale;
 }
 
+GameObject::GameObject(SDL_Texture* texture, float x, float y, int textureWidth, int textureHeight, float textureUpscale) {
+	objectTexture = texture;
+	std::cout << objectTexture << std::endl;
+	this->x = x;
+	this->y = y;
+	this->textureWidth = textureWidth;
+	this->textureHeight = textureHeight;
+	this->textureUpscale = textureUpscale;
+}
+
 void GameObject::Update() {
 	
 
