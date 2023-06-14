@@ -1,8 +1,8 @@
 #include "EnemyController.h"
 
-const float EnemyController::xTravel = Game::WIDTH/3;
+const float EnemyController::xTravel = Game::WIDTH/4;
 
-EnemyController::EnemyController(const char* texturesheet, float x, float y) :GameObject(texturesheet, x, y, 15, 15, 3.0f), xStart(x) {
+EnemyController::EnemyController(const char* texturesheet, float x, float y) :GameObject(texturesheet, x, y, 15, 15, 2.0f), xStart(x) {
 	movementSpeed = 100.0f;
 	
 }
@@ -11,6 +11,16 @@ void EnemyController::Update()
 {
 	move();
 	GameObject::Update();
+
+}
+
+void EnemyController::Render() {
+	GameObject::Render();
+
+	/*SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
+	SDL_RenderDrawLine(Game::renderer, xStart + (textureWidth * textureUpscale)/2, 0, xStart + (textureWidth * textureUpscale) / 2, 100);
+	SDL_SetRenderDrawColor(Game::renderer, 255, 10, 10, 255);
+	SDL_RenderDrawLine(Game::renderer, Game::WIDTH/2, 0, Game::WIDTH/2, 400);*/
 
 }
 

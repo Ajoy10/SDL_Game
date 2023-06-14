@@ -2,11 +2,14 @@
 #include "GameObject.h"
 #include "PlayerController.h"
 #include "EnemyController.h"
+#include "EnemyManager.h"
+
 
 
 PlayerController* playerObj;
-EnemyController* enemyObj1;
-EnemyController* enemyObj2;
+//EnemyController* enemyObj1;
+//EnemyController* enemyObj2;
+EnemyManager* enemyManager;
 
 
 Uint32 lastTicks;
@@ -50,10 +53,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		playerObj = new PlayerController("assets/player.png", Game::WIDTH/2, 200);
-		enemyObj1 = new EnemyController("assets/enemy_one.png", Game::WIDTH/2, 20);
-		enemyObj2 = new EnemyController("assets/enemy_one.png", Game::WIDTH / 2 + 64, 20);
-
+		playerObj = new PlayerController("assets/player.png", Game::WIDTH/2, Game::HEIGHT - 200);
+		/*enemyObj1 = new EnemyController("assets/enemy_one.png", Game::WIDTH/2, 20);
+		enemyObj2 = new EnemyController("assets/enemy_one.png", Game::WIDTH / 2 + 64, 20);*/
+		enemyManager = new EnemyManager(33);
+		enemyManager->Init();
 	}
 	else {
 		isRunning = false;
@@ -83,7 +87,7 @@ void Game::update() {
 		;
 	deltaTime = (SDL_GetTicks() - lastTicks)/1000.0f;
 	lastTicks = SDL_GetTicks();
-	std::cout << "Delta: " << deltaTime << std::endl;
+	//std::cout << "Delta: " << deltaTime << std::endl;
 	// Clamp maximum delta time value
 	if (deltaTime > 0.05f)
 	{
@@ -92,9 +96,9 @@ void Game::update() {
 
 
 	playerObj->Update();
-	enemyObj1->Update();
-	enemyObj2->Update();
-
+	/*enemyObj1->Update();
+	enemyObj2->Update();*/
+	enemyManager->Update();
 
 	frame++;
 	
@@ -102,11 +106,13 @@ void Game::update() {
 }
 
 void Game::render() {
+	SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
 	SDL_RenderClear(renderer);
 	// Add your renderings here
 	playerObj->Render();
-	enemyObj1->Render();
-	enemyObj2->Render();
+	/*enemyObj1->Render();
+	enemyObj2->Render();*/
+	enemyManager->Render();
 
 
 	SDL_RenderPresent(renderer);
