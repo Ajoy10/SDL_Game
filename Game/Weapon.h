@@ -4,7 +4,7 @@
 class Weapon
 {
 private:
-	std::vector<Bullet> bullets;
+	std::vector<Bullet*> bullets;
 	int maxBullets;
 public:
 	Weapon();

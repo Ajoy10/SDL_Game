@@ -95,10 +95,12 @@ void Game::update() {
 	}
 
 
-	playerObj->Update();
+	// playerObj->Update();
 	/*enemyObj1->Update();
 	enemyObj2->Update();*/
-	enemyManager->Update();
+	//enemyManager->Update();
+
+	GameObject::UpdateEverything();
 
 	frame++;
 	
@@ -109,11 +111,12 @@ void Game::render() {
 	SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
 	SDL_RenderClear(renderer);
 	// Add your renderings here
-	playerObj->Render();
+	//playerObj->Render();
 	/*enemyObj1->Render();
 	enemyObj2->Render();*/
-	enemyManager->Render();
+	//enemyManager->Render();
 
+	GameObject::RenderEverything();
 
 	SDL_RenderPresent(renderer);
 

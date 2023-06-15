@@ -26,21 +26,21 @@ void EnemyManager::Init()
 		currentOffset = currentOffset + 1;
 		const int xInit = (Game::WIDTH / 2 + (maxInCurrentLayer / 2.0f - currentOffset) * 42) + 9.5f; // +9 is added manually to offset it to center of the screen
 		const int yInit = 20 + (currentLayer * 42);
-		enemies.push_back(EnemyController("assets/enemy_one.png", xInit , yInit));
+		enemies.push_back(new EnemyController("assets/enemy_one.png", xInit , yInit));
 		countInCurrentLayer++;
 	}
 }
 
-void EnemyManager::Update()
-{
-	for (int i = 0; i < enemies.size(); i++) {
-		enemies.at(i).Update();
-	}
-}
+//void EnemyManager::Update()
+//{
+//	for (int i = 0; i < enemies.size(); i++) {
+//		enemies.at(i)->Update();
+//	}
+//}
 
 void EnemyManager::Render()
 {
 	for (int i = 0; i < enemies.size(); i++) {
-		enemies.at(i).Render();
+		enemies.at(i)->Render();
 	}
 }

@@ -5,9 +5,9 @@ const int EnemyController::horizontalMovementTriggerCount = 3;
 
 
 
-EnemyController::EnemyController(const char* texturesheet, float x, float y) :GameObject(texturesheet, x, y, 15, 15, 2.0f), xStart(x) {
+EnemyController::EnemyController(const char* texturesheet, float x, float y) :GameObject("Enemy",texturesheet, x, y, 15, 15, 2.0f), xStart(x) {
 	movementSpeed = 100.0f;
-	
+	GameObject::RegisterGameObject(this);
 }
 
 void EnemyController::Update()
