@@ -13,6 +13,8 @@ public:
     
 private:
     float movementSpeed;
+    Uint16 lastWeaponFire;
+    static int weaponFireFreezeTime;
     void move(float xInput);
 };
 

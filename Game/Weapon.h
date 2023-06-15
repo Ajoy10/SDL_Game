@@ -5,10 +5,12 @@ class Weapon
 {
 private:
 	std::vector<Bullet> bullets;
+	int maxBullets;
 public:
 	Weapon();
+	Weapon(int maxBullets);
 	void Update();
 	void Render();
 
-	void Shoot(float x, float y, float xDelta, float yDelta);
+	bool Shoot(float x, float y, float xDelta, float yDelta);
 };

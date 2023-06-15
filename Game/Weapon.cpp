@@ -1,7 +1,14 @@
 #include "Weapon.h"
 
-void Weapon::Shoot(float x, float y, float xDelta, float yDelta) {
-	bullets.push_back(Bullet(x, y, xDelta, yDelta));
+bool Weapon::Shoot(float x, float y, float xDelta, float yDelta) {
+	if(bullets.size() < maxBullets)
+	{
+		bullets.push_back(Bullet(x, y, xDelta, yDelta));
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 void Weapon::Update() {
@@ -17,5 +24,9 @@ void Weapon::Render() {
 }
 
 Weapon::Weapon() {
+	this->maxBullets = 5;
+}
 
+Weapon::Weapon(int maxBullets) {
+	this->maxBullets = maxBullets;
 }
