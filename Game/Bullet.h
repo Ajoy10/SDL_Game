@@ -10,6 +10,6 @@ public:
 	Bullet(float x, float y, float xDelta, float yDelta);
 	void Update();
 	static SDL_Texture* GetBulletTexture();
-
+	void Collided(GameObject* go) override;
 };
 

@@ -7,6 +7,7 @@ const int EnemyController::horizontalMovementTriggerCount = 3;
 
 EnemyController::EnemyController(const char* texturesheet, float x, float y) :GameObject("Enemy",texturesheet, x, y, 15, 15, 2.0f), xStart(x) {
 	movementSpeed = 100.0f;
+	GameObject::SetCollisionBox(textureHeight * textureUpscale, textureWidth * textureUpscale);
 	GameObject::RegisterGameObject(this);
 }
 

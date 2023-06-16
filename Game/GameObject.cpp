@@ -36,10 +36,51 @@ void GameObject::Update() {
 	destRect.h = srcRect.h * textureUpscale;
 	destRect.x = x;
 	destRect.y = y;
+
+	if (hasCollision) {
+		UpdateCollisionBox();
+		CheckForCollision();
+	}
+}
+
+void GameObject::CheckForCollision() {
+	for (int i = 0; i < gameobjects.size(); i++) {
+		if (gameobjects.at(i)->hasCollision && gameobjects.at(i) != this)  {
+			//std::cout << name << " Collision check with " << gameobjects.at(i)->name << std::endl;
+
+			if (Collision::AABB(collisionBox, gameobjects.at(i)->collisionBox)) {
+				gameobjects.at(i)->Collided(this);
+			}
+		}
+	}
+}
+
+void GameObject::SetCollisionBox( int w, int h)
+{
+	hasCollision = true;
+	collisionBox.x = this->x;
+	collisionBox.y = this->y;
+	collisionBox.w = w;
+	collisionBox.h = h;
+}
+
+void GameObject::UpdateCollisionBox()
+{
+	collisionBox.x = this->x;
+	collisionBox.y = this->y;
+}
+
+void GameObject::Collided(GameObject* go)
+{
+	std::cout << name << " Collide with " << go->name << std::endl;
 }
 
 void GameObject::Render() {
 	SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &destRect);
+	if (hasCollision) {
+		SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 255);
+		SDL_RenderDrawRect(Game::renderer, &collisionBox);
+	}
 }
 
 int GameObject::RegisterGameObject(GameObject* go)
@@ -52,6 +93,7 @@ int GameObject::RegisterGameObject(GameObject* go)
 void GameObject::DestroyGameObject(GameObject* go)
 {
 	gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), go), gameobjects.end());
+	delete go;
 }
 
 void GameObject::UpdateEverything()

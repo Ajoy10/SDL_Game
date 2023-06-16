@@ -9,8 +9,7 @@ private:
 public:
 	Weapon();
 	Weapon(int maxBullets);
-	void Update();
-	void Render();
+	
 
 	bool Shoot(float x, float y, float xDelta, float yDelta);
 };

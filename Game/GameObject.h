@@ -1,6 +1,7 @@
 #pragma once
 #include "Game.h"
 #include "SDL_image.h";
+#include "Collision.h"
 #include <vector>
 class GameObject
 {
@@ -12,6 +13,14 @@ public:
 
 	virtual void Update();
 	virtual void Render();
+
+	void CheckForCollision();
+
+	void SetCollisionBox(int w, int h);
+	void UpdateCollisionBox();
+
+	char* name;
+
 
 	static std::vector<GameObject*> gameobjects;
 	static int lastId;
@@ -29,7 +38,9 @@ protected:
 	int textureWidth, textureHeight;
 	int ID;
 	float textureUpscale;
-	char* name;
+	bool hasCollision = false;
+	SDL_Rect collisionBox;
+	virtual void Collided(GameObject* go);
 
 private:
 	SDL_Texture* objectTexture;

@@ -3,7 +3,7 @@
 PlayerController::PlayerController(const char* texturesheet, float x, float y) :GameObject("Player",texturesheet, x, y, 14, 14, 3.0f) {
 	movementSpeed = 400.0f;
 	lastWeaponFire = SDL_GetTicks();
-	weapon = Weapon(2);
+	weapon = Weapon(200);
 	GameObject::RegisterGameObject(this);
 }
 
@@ -33,10 +33,7 @@ int PlayerController::weaponFireFreezeTime = 500; //ms
 	
 }
 
- void PlayerController::Render() {
-	 GameObject::Render();
-	 weapon.Render();
- }
+
 
 
 

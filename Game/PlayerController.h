@@ -9,7 +9,6 @@ public:
     PlayerController(const char* texturesheet, float x, float y);
     Weapon weapon;
     void Update();
-    void Render();
     
 private:
     float movementSpeed;
