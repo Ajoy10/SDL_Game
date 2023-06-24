@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include <iostream>
 
 SDL_Texture* Bullet::bulletTexture = nullptr;
 
@@ -20,7 +21,11 @@ Bullet::Bullet(float x, float y, float xDelta, float yDelta):GameObject("Bullet"
 
 void Bullet::Collided(GameObject* go) {
 	std::cout << name << " Destroyed " << go->name << std::endl;
-	GameObject::DestroyGameObject(go);
+	EnemyController* enemy = dynamic_cast<EnemyController*>(go);
+	if (enemy != NULL)
+	{
+		enemy->Destroy();
+	}
 
 	GameObject::DestroyGameObject((GameObject*)this);
 }

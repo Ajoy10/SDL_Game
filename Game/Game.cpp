@@ -53,7 +53,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		playerObj = new PlayerController("assets/player.png", Game::WIDTH/2, Game::HEIGHT - 200);
+		playerObj = new PlayerController("assets/player_anim.png", Game::WIDTH/2, Game::HEIGHT - 200);
 		/*enemyObj1 = new EnemyController("assets/enemy_one.png", Game::WIDTH/2, 20);
 		enemyObj2 = new EnemyController("assets/enemy_one.png", Game::WIDTH / 2 + 64, 20);*/
 		enemyManager = new EnemyManager(33);

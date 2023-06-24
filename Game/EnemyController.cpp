@@ -28,6 +28,22 @@ void EnemyController::Render() {
 
 }
 
+void EnemyController::Destroy()
+{
+	// Setting destroy animation
+	AnimationParams newParams;
+	newParams.animationIndex = 1;
+	newParams.animationLoop = false;
+	newParams.animationFrames = 5;
+	newParams.animationStartTick = SDL_GetTicks();
+	GameObject::ChangeAnimationParams(newParams);
+	animated = true;
+	// Disabling collision so that no other bullet will try to collide and destroy the object
+	hasCollision = false;
+	// Adding enemy to destroy pool with delay
+	GameObject::DestroyGameObject(this, 450);
+}
+
 void EnemyController::move() {
 	x += direction * movementSpeed * Game::deltaTime;
 

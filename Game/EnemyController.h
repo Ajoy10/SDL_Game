@@ -8,6 +8,8 @@ public:
     void Update();
     void Render();
 
+    void Destroy();
+
 private:
     float movementSpeed;
     short int direction = 1;

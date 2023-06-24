@@ -4,6 +4,8 @@ PlayerController::PlayerController(const char* texturesheet, float x, float y) :
 	movementSpeed = 400.0f;
 	lastWeaponFire = SDL_GetTicks();
 	weapon = Weapon(200);
+	GameObject::animated = true;
+	GameObject::
 	GameObject::RegisterGameObject(this);
 }
 
