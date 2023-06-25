@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "TextureManager.h"
-#include "EnemyController.h"
+
 
 class Bullet : public GameObject {
 private:

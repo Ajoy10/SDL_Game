@@ -1,15 +1,22 @@
 #include "Weapon.h"
+#include "Bullet.h"
+
 
 bool Weapon::Shoot(float x, float y, float xDelta, float yDelta) {
-	if(bullets.size() < maxBullets)
+	if(usedBulletsCount < maxBullets)
 	{
 		Bullet *b = new Bullet(x, y, xDelta, yDelta);
-		bullets.push_back(b);
+		usedBulletsCount++;
 		return true;
 	}
 	else {
 		return false;
 	}
+}
+
+void Weapon::AddBullet()
+{
+	this->usedBulletsCount--;
 }
 
 

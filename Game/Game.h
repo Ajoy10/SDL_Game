@@ -2,6 +2,12 @@
 #include "SDL.h"
 #include <iostream>
 #include "TextureManager.h"
+#include "Input.h"
+
+
+class PlayerController;
+class EnemyManager;
+
 
 class Game
 {
@@ -23,6 +29,11 @@ class Game
 		static SDL_Renderer* renderer;
 		static SDL_Event event;
 		static float deltaTime;
+
+		// Game specific data
+		static PlayerController* player;
+		static EnemyManager* enemyManager;
+
 	private:
 		bool isRunning;
 		SDL_Window* window;

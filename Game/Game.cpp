@@ -1,16 +1,7 @@
+#pragma once
 #include "Game.h"
-#include "GameObject.h"
 #include "PlayerController.h"
-#include "EnemyController.h"
 #include "EnemyManager.h"
-
-
-
-PlayerController* playerObj;
-//EnemyController* enemyObj1;
-//EnemyController* enemyObj2;
-EnemyManager* enemyManager;
-
 
 Uint32 lastTicks;
 
@@ -23,6 +14,10 @@ const int Game::HEIGHT = 640;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 float Game::deltaTime;
+
+PlayerController* Game::player;
+EnemyManager* Game::enemyManager;
+
 
 Game::Game() {
 
@@ -53,10 +48,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		playerObj = new PlayerController("assets/player_anim.png", Game::WIDTH/2, Game::HEIGHT - 200);
-		/*enemyObj1 = new EnemyController("assets/enemy_one.png", Game::WIDTH/2, 20);
-		enemyObj2 = new EnemyController("assets/enemy_one.png", Game::WIDTH / 2 + 64, 20);*/
-		enemyManager = new EnemyManager(33);
+		player = new PlayerController("assets/player_anim.png", Game::WIDTH/2, Game::HEIGHT - 200);
+		
+		enemyManager = new EnemyManager(30);
 		enemyManager->Init();
 	}
 	else {

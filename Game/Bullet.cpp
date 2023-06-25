@@ -1,8 +1,11 @@
 #include "Bullet.h"
+#include "EnemyController.h"
+#include "PlayerController.h"
 #include <iostream>
 
 SDL_Texture* Bullet::bulletTexture = nullptr;
 
+class PlayerController;
 SDL_Texture* Bullet::GetBulletTexture() {
 	if (!Bullet::bulletTexture)
 		Bullet::bulletTexture = TextureManager::LoadTexture("assets/bullet.png");
@@ -27,12 +30,22 @@ void Bullet::Collided(GameObject* go) {
 		enemy->Destroy();
 	}
 
+	Game::player->weapon.AddBullet();
 	GameObject::DestroyGameObject((GameObject*)this);
 }
 
 void Bullet::Update() {
 	x += xDelta * Game::deltaTime;
 	y += yDelta * Game::deltaTime;
-	GameObject::Update();
+
+
+
+	if (y < 0) {
+		Game::player->weapon.AddBullet();
+		GameObject::DestroyGameObject((GameObject*)this);
+	}
+	else {
+		GameObject::Update();
+	}
 	
 }

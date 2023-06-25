@@ -3,9 +3,8 @@
 PlayerController::PlayerController(const char* texturesheet, float x, float y) :GameObject("Player",texturesheet, x, y, 14, 14, 3.0f) {
 	movementSpeed = 400.0f;
 	lastWeaponFire = SDL_GetTicks();
-	weapon = Weapon(200);
+	weapon = Weapon(2);
 	GameObject::animated = true;
-	GameObject::
 	GameObject::RegisterGameObject(this);
 }
 

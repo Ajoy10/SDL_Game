@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
-#include "Bullet.h"
 class Weapon
 {
 private:
-	std::vector<Bullet*> bullets;
+	
+	int usedBulletsCount = 0;
 	int maxBullets;
 public:
 	Weapon();
@@ -12,4 +12,5 @@ public:
 	
 
 	bool Shoot(float x, float y, float xDelta, float yDelta);
+	void AddBullet();
 };
