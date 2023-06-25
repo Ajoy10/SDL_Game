@@ -13,39 +13,43 @@ SDL_Texture* Bullet::GetBulletTexture() {
 	return Bullet::bulletTexture;
 }
 
-Bullet::Bullet(float x, float y, float xDelta, float yDelta):GameObject("Bullet",Bullet::GetBulletTexture(), x, y) {
-	
+Bullet::Bullet(float x, float y, float xDelta, float yDelta, BulletType type):GameObject("Bullet",Bullet::GetBulletTexture(), x, y) {
+	this->type = type;
 	this->xDelta = xDelta;
 	this->yDelta = yDelta;
 	GameObject::SetCollisionBox(textureWidth * textureUpscale, textureHeight * textureUpscale);
 	GameObject::RegisterGameObject(this);
-	std::cout << "Registered a bullet" << std::endl;
+	std::cout << "Registered a bullet"<< this->type << std::endl;
 }
 
 void Bullet::Collided(GameObject* go) {
-	std::cout << name << " Destroyed " << go->name << std::endl;
 	EnemyController* enemy = dynamic_cast<EnemyController*>(go);
-	if (enemy != NULL)
-	{
-		enemy->Destroy();
+	if (type == BulletType::PLAYER_BULLET) {
+		Game::player->weapon.AddBullet();
+		if (enemy != NULL)
+		{
+			enemy->Destroy();
+		}
+		GameObject::DestroyGameObject((GameObject*)this);
+
+	}
+	else if (type == BulletType::ENEMY_BULLET) {
+		
 	}
 
-	Game::player->weapon.AddBullet();
-	GameObject::DestroyGameObject((GameObject*)this);
 }
 
 void Bullet::Update() {
 	x += xDelta * Game::deltaTime;
 	y += yDelta * Game::deltaTime;
 
-
-
-	if (y < 0) {
-		Game::player->weapon.AddBullet();
+	if (y < 0 || y > Game::HEIGHT + 10.0f) {
+		if (type == BulletType::PLAYER_BULLET) {
+			Game::player->weapon.AddBullet();
+		}
 		GameObject::DestroyGameObject((GameObject*)this);
 	}
 	else {
 		GameObject::Update();
 	}
-	
 }

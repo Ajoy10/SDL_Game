@@ -110,7 +110,7 @@ void GameObject::Render() {
 	SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &destRect);
 	if (hasCollision) {
 		SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 255);
-		// SDL_RenderDrawRect(Game::renderer, &collisionBox);
+		SDL_RenderDrawRect(Game::renderer, &collisionBox);
 	}
 }
 

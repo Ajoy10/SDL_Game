@@ -3,9 +3,11 @@
 PlayerController::PlayerController(const char* texturesheet, float x, float y) :GameObject("Player",texturesheet, x, y, 14, 14, 3.0f) {
 	movementSpeed = 400.0f;
 	lastWeaponFire = SDL_GetTicks();
-	weapon = Weapon(2);
+	weapon = Weapon(2, Bullet::BulletType::PLAYER_BULLET);
 	GameObject::animated = true;
 	GameObject::RegisterGameObject(this);
+	hasCollision = true;
+	SetCollisionBox(textureWidth * textureUpscale, textureHeight * textureUpscale);
 }
 
 int PlayerController::weaponFireFreezeTime = 500; //ms
@@ -25,7 +27,7 @@ int PlayerController::weaponFireFreezeTime = 500; //ms
 
 	 if (Input::GetKeyDown(SDL_SCANCODE_SPACE) && (SDL_GetTicks() > lastWeaponFire + PlayerController::weaponFireFreezeTime)) {
 		 //std::cout << " SPACE pressed" << std::endl;
-		 weapon.Shoot(x + (textureWidth * textureUpscale) / 3.5f, y, 0.0f, -100.0f);
+		 weapon.Shoot(x + (textureWidth * textureUpscale) / 3.5f, y - (textureHeight * textureUpscale)/2, 0.0f, -200.0f);
 		 lastWeaponFire = SDL_GetTicks();
 	 }
 	 move(xInput);

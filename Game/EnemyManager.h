@@ -6,6 +6,10 @@
 class EnemyManager
 {
 public:
+	static int enemyShootingChance;
+	static float enemyBulletSpeed;
+	static int weaponFireFreezeTime;
+
 	EnemyManager(int totalEnemies);
 	~EnemyManager();
 	void Init();

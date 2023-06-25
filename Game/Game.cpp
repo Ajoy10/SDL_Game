@@ -8,8 +8,8 @@ Uint32 lastTicks;
 
 int frame;
 
-const int Game::WIDTH = 820;
-const int Game::HEIGHT = 640;
+const int Game::WIDTH = 1024;
+const int Game::HEIGHT = 720;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;

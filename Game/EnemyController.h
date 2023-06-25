@@ -1,15 +1,21 @@
 #pragma once
 #include "GameObject.h"
+class Weapon;
 class EnemyController : public GameObject
 {
 public:
+    // Used for shooting logic
+    int enemyIndexX, enemyIndexY;
+    Weapon* weapon;
+    bool canShoot = false;
+
     EnemyController(const char* texturesheet, float x, float y);
 
     void Update();
     void Render();
 
     void Destroy();
-
+    void AttemptShoot();
 private:
     float movementSpeed;
     short int direction = 1;
@@ -18,6 +24,9 @@ private:
     const float xStart;
     static const float xTravel;
     void move();
+
+    Uint16 lastWeaponFire;
+
 };
 
 

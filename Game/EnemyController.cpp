@@ -1,4 +1,6 @@
 #include "EnemyController.h"
+#include "Weapon.h"
+#include "EnemyManager.h"
 
 const float EnemyController::xTravel = Game::WIDTH/4;
 const int EnemyController::horizontalMovementTriggerCount = 3;
@@ -9,13 +11,17 @@ EnemyController::EnemyController(const char* texturesheet, float x, float y) :Ga
 	movementSpeed = 100.0f;
 	GameObject::SetCollisionBox(textureHeight * textureUpscale, textureWidth * textureUpscale);
 	GameObject::RegisterGameObject(this);
+	weapon = new Weapon(100, Bullet::BulletType::ENEMY_BULLET);
+	lastWeaponFire = 0;
 }
 
 void EnemyController::Update()
 {
 	move();
 	GameObject::Update();
-
+	if (canShoot && SDL_GetTicks() > lastWeaponFire + EnemyManager::weaponFireFreezeTime) {
+		AttemptShoot();
+	}
 }
 
 void EnemyController::Render() {
@@ -43,6 +49,18 @@ void EnemyController::Destroy()
 	// Adding enemy to destroy pool with delay
 	GameObject::DestroyGameObject(this, 450);
 }
+
+void EnemyController::AttemptShoot()
+{
+	int rng = rand() % 10;
+	if (rng < EnemyManager::enemyShootingChance) {
+		weapon->Shoot(x,y + (textureHeight * textureUpscale) + 1.0, 0.0f, EnemyManager::enemyBulletSpeed);
+	}
+	lastWeaponFire = SDL_GetTicks();
+
+}
+
+
 
 void EnemyController::move() {
 	x += direction * movementSpeed * Game::deltaTime;
