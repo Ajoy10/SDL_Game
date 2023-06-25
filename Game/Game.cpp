@@ -50,7 +50,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		player = new PlayerController("assets/player_anim.png", Game::WIDTH/2, Game::HEIGHT - 200);
 		
-		enemyManager = new EnemyManager(30);
+		enemyManager = new EnemyManager(33);
 		enemyManager->Init();
 	}
 	else {
@@ -81,7 +81,7 @@ void Game::update() {
 		;
 	deltaTime = (SDL_GetTicks() - lastTicks)/1000.0f;
 	lastTicks = SDL_GetTicks();
-	//std::cout << "Delta: " << deltaTime << std::endl;
+	
 	// Clamp maximum delta time value
 	if (deltaTime > 0.05f)
 	{
@@ -89,11 +89,7 @@ void Game::update() {
 	}
 
 
-	// playerObj->Update();
-	/*enemyObj1->Update();
-	enemyObj2->Update();*/
-	//enemyManager->Update();
-
+	
 	GameObject::UpdateEverything();
 
 	frame++;
@@ -104,12 +100,7 @@ void Game::update() {
 void Game::render() {
 	SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
 	SDL_RenderClear(renderer);
-	// Add your renderings here
-	//playerObj->Render();
-	/*enemyObj1->Render();
-	enemyObj2->Render();*/
-	//enemyManager->Render();
-
+	
 	GameObject::RenderEverything();
 
 	SDL_RenderPresent(renderer);
