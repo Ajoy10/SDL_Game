@@ -2,6 +2,11 @@
 #include "SDL.h"
 #include <iostream>
 #include "TextureManager.h"
+#include "Input.h"
+
+class PlayerController;
+class EnemyManager;
+
 
 class Game
 {
@@ -16,13 +21,20 @@ class Game
 		void render();
 		void clean();
 
+		static void GameOver();
+
 		bool running() { return isRunning; }
 
 		const static int WIDTH, HEIGHT;
-
 		static SDL_Renderer* renderer;
 		static SDL_Event event;
 		static float deltaTime;
+		
+		static bool gamePaused;
+		// Game specific data
+		static PlayerController* player;
+		static EnemyManager* enemyManager;
+
 	private:
 		bool isRunning;
 		SDL_Window* window;

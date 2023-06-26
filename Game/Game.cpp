@@ -1,35 +1,33 @@
+#pragma once
 #include "Game.h"
-#include "GameObject.h"
 #include "PlayerController.h"
-#include "EnemyController.h"
 #include "EnemyManager.h"
-
-
-
-PlayerController* playerObj;
-//EnemyController* enemyObj1;
-//EnemyController* enemyObj2;
-EnemyManager* enemyManager;
-
+#include "TextManager.h";
 
 Uint32 lastTicks;
 
 
 int frame;
 
-const int Game::WIDTH = 820;
-const int Game::HEIGHT = 640;
+const int Game::WIDTH = 1024;
+const int Game::HEIGHT = 720;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 float Game::deltaTime;
+bool Game::gamePaused = false;
+
+PlayerController* Game::player;
+EnemyManager* Game::enemyManager;
+
+;
 
 Game::Game() {
 
 }
 
 Game::~Game() {
-	
+	TextManager::CleanUp();
 }
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) {
@@ -51,11 +49,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			std::cout << "Renderer created!" << std::endl;
 		}
 
+		// Initialising TextManager
+		TextManager::Init();
+
 		isRunning = true;
 
-		playerObj = new PlayerController("assets/player.png", Game::WIDTH/2, Game::HEIGHT - 200);
-		/*enemyObj1 = new EnemyController("assets/enemy_one.png", Game::WIDTH/2, 20);
-		enemyObj2 = new EnemyController("assets/enemy_one.png", Game::WIDTH / 2 + 64, 20);*/
+		player = new PlayerController("assets/player_anim.png", Game::WIDTH/2, Game::HEIGHT - 200);
+		
 		enemyManager = new EnemyManager(33);
 		enemyManager->Init();
 	}
@@ -87,7 +87,7 @@ void Game::update() {
 		;
 	deltaTime = (SDL_GetTicks() - lastTicks)/1000.0f;
 	lastTicks = SDL_GetTicks();
-	//std::cout << "Delta: " << deltaTime << std::endl;
+	
 	// Clamp maximum delta time value
 	if (deltaTime > 0.05f)
 	{
@@ -95,10 +95,8 @@ void Game::update() {
 	}
 
 
-	playerObj->Update();
-	/*enemyObj1->Update();
-	enemyObj2->Update();*/
-	enemyManager->Update();
+	
+	GameObject::UpdateEverything();
 
 	frame++;
 	
@@ -108,13 +106,10 @@ void Game::update() {
 void Game::render() {
 	SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
 	SDL_RenderClear(renderer);
-	// Add your renderings here
-	playerObj->Render();
-	/*enemyObj1->Render();
-	enemyObj2->Render();*/
-	enemyManager->Render();
 
-
+	GameObject::RenderEverything();
+	// Render all text
+	TextManager::Render();
 	SDL_RenderPresent(renderer);
 
 
@@ -125,4 +120,14 @@ void Game::clean() {
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	std::cout << "Game cleaned!" << std::endl;
+}
+
+void Game::GameOver()
+{
+	for (GameObject * go : GameObject::gameobjects) {
+		GameObject::DestroyGameObject(go, 10);
+
+	}
+
+	TextManager::AddText(WIDTH / 2, HEIGHT / 2, "Game Over!");
 }

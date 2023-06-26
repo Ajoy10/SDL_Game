@@ -1,8 +1,27 @@
 #include "PlayerController.h"
+#include "TextManager.h"
+#include "Text.h"
 
-PlayerController::PlayerController(const char* texturesheet, float x, float y) :GameObject(texturesheet, x, y,14,14, 3.0f) {
+#include <string>
+
+
+PlayerController::PlayerController(const char* texturesheet, float x, float y) :GameObject("Player",texturesheet, x, y, 14, 14, 3.0f) {
 	movementSpeed = 400.0f;
+	lastWeaponFire = SDL_GetTicks();
+	weapon = Weapon(2, Bullet::BulletType::PLAYER_BULLET);
+	GameObject::animated = true;
+	GameObject::RegisterGameObject(this);
+	hasCollision = true;
+	SetCollisionBox(textureWidth * textureUpscale, textureHeight * textureUpscale);
+	healthText = TextManager::AddText(100, Game::HEIGHT - 40, std::string("Health: ").append(std::to_string(health)).c_str());
 }
+
+PlayerController::~PlayerController()
+{
+	delete healthText;
+}
+
+int PlayerController::weaponFireFreezeTime = 500; //ms
 
  void PlayerController::Update() 
 {
@@ -17,14 +36,32 @@ PlayerController::PlayerController(const char* texturesheet, float x, float y) :
 		 xInput = 1;
 	 }
 
-	 if (Input::GetKeyDown(SDL_SCANCODE_SPACE)) {
-		 std::cout << " SPACE pressed" << std::endl;
-
+	 if (Input::GetKeyDown(SDL_SCANCODE_SPACE) && (SDL_GetTicks() > lastWeaponFire + PlayerController::weaponFireFreezeTime)) {
+		 //std::cout << " SPACE pressed" << std::endl;
+		 weapon.Shoot(x + (textureWidth * textureUpscale) / 3.5f, y - (textureHeight * textureUpscale)/2, 0.0f, -200.0f);
+		 lastWeaponFire = SDL_GetTicks();
 	 }
 	 move(xInput);
+	 //weapon.Update();
 	GameObject::Update();
 	
 }
+
+ void PlayerController::TakeHit() {
+	 health--;
+	 std::cout << "Health: " << health << std::endl;
+	 healthText->ChangeText(std::string("Health: ").append(std::to_string(health)).c_str());
+	 // Update Health UI
+	 if (health == 0) {
+		 // Dead
+		 Game::GameOver();
+
+	 }
+ }
+
+
+
+
 
  void PlayerController::move(float xInput) {
 	 x += xInput * movementSpeed * Game::deltaTime;
