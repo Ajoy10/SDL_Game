@@ -5,13 +5,22 @@
 
 Text::Text(float x, float y, const char* text)
 {
+	// Register itself to TextManager
+	TextManager::RegisterText(this);
 	this->x = x;
 	this->y = y;
 	this->text = text;
+	this->scaleX = 1;
+	this->scaleY = 1;
 	GenerateTexture();
 }
 
 void Text::GenerateTexture() {
+	if(texture != NULL)
+		SDL_DestroyTexture(texture);
+	if(surface != NULL)
+		SDL_FreeSurface(surface);
+
 	SDL_Color color = { 255,255,255,255 };
 	
 
@@ -28,15 +37,17 @@ void Text::GenerateTexture() {
 void Text::ChangeText(const char* text)
 {
 	this->text = text;
+	
+	GenerateTexture();
 }
 
 void Text::render()
 {
 	SDL_Rect dest;
-	dest.x = x - (surface->w / 2);
+	dest.x = x - (surface->w / 2); // made the pivot point to center
 	dest.y = y - (surface->h / 2);
-	dest.w = surface->w * 4;
-	dest.h = surface->h * 4;
+	dest.w = surface->w * scaleX;
+	dest.h = surface->h * scaleY;
 
 	SDL_RenderCopy(Game::renderer, texture, NULL, &dest);
 }
@@ -44,4 +55,5 @@ void Text::render()
 Text::~Text() {
 	SDL_DestroyTexture(texture);
 	SDL_FreeSurface(surface);
+	TextManager::UnregisterText(this);
 }

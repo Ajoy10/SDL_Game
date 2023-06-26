@@ -13,6 +13,8 @@ public:
 
 	void ChangeText(const char* text);
 	void render();
+
+	void SetScale(float x, float y) { scaleX = x; scaleY = y; };
 private:
 	const char* text;
 	SDL_Surface* surface;

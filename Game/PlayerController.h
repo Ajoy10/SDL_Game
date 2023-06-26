@@ -3,12 +3,15 @@
 #include "Input.h"
 #include "Weapon.h"
 
+class Text;
 class PlayerController :
     public GameObject
 {
 public:
     PlayerController(const char* texturesheet, float x, float y);
+    ~PlayerController();
     Weapon weapon;
+    Text* healthText;
     void Update();
     void TakeHit();
 private:

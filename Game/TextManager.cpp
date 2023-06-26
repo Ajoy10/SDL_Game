@@ -42,6 +42,23 @@ void TextManager::Render() {
 Text* TextManager::AddText(int x, int y, const char* text)
 {
 	Text* newText = new Text(x, y, text);
-	allText.push_back(newText);
+	
 	return newText;
+}
+
+void TextManager::RegisterText(Text* text)
+{
+	allText.push_back(text);
+}
+
+void TextManager::UnregisterText(Text* text)
+{
+	std::vector<Text*>::iterator target = std::find(TextManager::allText.begin(), TextManager::allText.end(), text);
+	if (target != allText.end()) {
+		TextManager::allText.erase(target)
+	}
+	else {
+		std::cout << "Could not find!" << std::endl;
+	}
+
 }

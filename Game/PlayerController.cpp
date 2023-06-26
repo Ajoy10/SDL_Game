@@ -1,4 +1,9 @@
 #include "PlayerController.h"
+#include "TextManager.h"
+#include "Text.h"
+
+#include <string>
+
 
 PlayerController::PlayerController(const char* texturesheet, float x, float y) :GameObject("Player",texturesheet, x, y, 14, 14, 3.0f) {
 	movementSpeed = 400.0f;
@@ -8,6 +13,12 @@ PlayerController::PlayerController(const char* texturesheet, float x, float y) :
 	GameObject::RegisterGameObject(this);
 	hasCollision = true;
 	SetCollisionBox(textureWidth * textureUpscale, textureHeight * textureUpscale);
+	healthText = TextManager::AddText(100, Game::HEIGHT - 40, std::string("Health: ").append(std::to_string(health)).c_str());
+}
+
+PlayerController::~PlayerController()
+{
+	delete healthText;
 }
 
 int PlayerController::weaponFireFreezeTime = 500; //ms
@@ -39,6 +50,7 @@ int PlayerController::weaponFireFreezeTime = 500; //ms
  void PlayerController::TakeHit() {
 	 health--;
 	 std::cout << "Health: " << health << std::endl;
+	 healthText->ChangeText(std::string("Health: ").append(std::to_string(health)).c_str());
 	 // Update Health UI
 	 if (health == 0) {
 		 // Dead
