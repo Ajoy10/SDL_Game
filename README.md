@@ -40,11 +40,13 @@ If you prefer to compile the project manually, follow these steps:
 
 The objective of Space Invaders is to destroy a fleet of aliens while avoiding their projectiles and preventing the aliens from reaching the bottom of the screen.
 sad
+
 - Move the spaceship using the A and D keys or the Left and Right arrows. <!-- Add left and right arrow keys as well -->
 - Shoot by pressing the spacebar.
 - Destroy all aliens to win the game.
 - If any alien reaches the bottom of the screen or collides with the spaceship, the game is over.
-<!-- 
+<!--
+
 ## :art: Customization
 
 Feel free to customize and enhance the game according to your preferences and learning goals. Here are some suggestions:
@@ -54,11 +56,12 @@ Feel free to customize and enhance the game according to your preferences and le
 - Introduce power-ups or additional obstacles.
 - Improve the graphics and visual effects.
 - Implement a scoring system or high-score tracking.
- -->
- 
+  -->
+
 ## :hourglass_flowing_sand: Progress
 
-![Two enemies on screen bouncing horizontally and player character moving with input](readme_files/progress_2.gif)
+![Two enemies on screen bouncing horizontally and player character moving with input](readme_files/progress_3.gif)
+
 ## :books: Resources
 
 - [SDL2 Documentation](https://wiki.libsdl.org/)
