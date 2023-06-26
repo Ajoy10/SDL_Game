@@ -28,6 +28,8 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -40,6 +42,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="TextManager.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
@@ -96,8 +100,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\VS Lib\SDL2_image-2.6.3\include;C:\VS Lib\SDL2-2.26.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VS Lib\SDL2-2.26.5\lib\x64;C:\VS Lib\SDL2_image-2.6.3\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\VS Lib\SDL2_image-2.6.3\include;C:\VS Lib\SDL2-2.26.5\include;C:\VS Lib\SDL2_ttf-2.20.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\VS Lib\SDL2-2.26.5\lib\x64;C:\VS Lib\SDL2_image-2.6.3\lib\x64;C:\VS Lib\SDL2_ttf-2.20.2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>C:\VS Lib\SDL2-2.26.5\include;$(IncludePath)</IncludePath>
@@ -143,7 +147,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\VS Lib\SDL2-2.26.5\lib\x64;C:\VS Lib\SDL2_image-2.6.3\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>

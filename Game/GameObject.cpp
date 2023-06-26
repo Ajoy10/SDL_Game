@@ -123,8 +123,11 @@ int GameObject::RegisterGameObject(GameObject* go)
 
 void GameObject::DestroyGameObject(GameObject* go)
 {
-	gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), go), gameobjects.end());
-	delete go;
+	std::vector<GameObject*>::iterator it = std::find(gameobjects.begin(), gameobjects.end(), go);
+	if (it != gameobjects.end()) {
+		gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), go), gameobjects.end());
+		delete go;
+	}
 }
 
 void GameObject::DestroyGameObject(GameObject* go, int delay)
@@ -137,6 +140,7 @@ void GameObject::DestroyGameObject(GameObject* go, int delay)
 
 void GameObject::UpdateEverything()
 {
+	if (Game::gamePaused) return;
 	// Checking for objects that are flagged for deletion
 	std::vector<GameObject::GameObjectWithDelay>::iterator it = gameobjectsToDelete.begin();
 		

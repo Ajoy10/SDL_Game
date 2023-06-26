@@ -4,11 +4,31 @@
 
 
 int EnemyManager::maxInALayer = 6;
-int EnemyManager::enemyShootingChance = 2;
+int EnemyManager::enemyShootingChance = 5;
 float EnemyManager::enemyBulletSpeed = 200.0f;
 int EnemyManager::weaponFireFreezeTime = 1000;
 
 
+
+void EnemyManager::PassEnemyShootingAbility(int indexX, int indexY)
+{
+	int tX = indexX, tY = indexY - 1;
+	EnemyController* target = NULL;
+	if (tY < 0 ) {
+		// Destroyed was the last one and there are no more enemies in this column
+		return;
+	}
+
+	for (EnemyController *enemy : enemies) {
+		if (enemy->enemyIndexX == tX && enemy->enemyIndexY == tY) {
+			enemy->canShoot = true;
+			break;
+		}
+	}
+
+	// Also increase the rate of firing
+	EnemyManager::enemyShootingChance += 2;
+}
 
 EnemyManager::EnemyManager(int totalEnemies)
 {
@@ -40,7 +60,7 @@ void EnemyManager::Init()
 		enemy->enemyIndexX = countInCurrentLayer;
 		enemy->enemyIndexY = currentLayer;
 		std::cout << enemy->enemyIndexX << "," << enemy->enemyIndexY << std::endl;
-		if (currentLayer == totalLayer) {
+		if (currentLayer >= totalLayer - 1 ) {
 			enemy->canShoot = true;
 		}
 		countInCurrentLayer++;

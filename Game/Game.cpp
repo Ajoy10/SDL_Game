@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "PlayerController.h"
 #include "EnemyManager.h"
+#include "TextManager.h";
 
 Uint32 lastTicks;
 
@@ -14,17 +15,19 @@ const int Game::HEIGHT = 720;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 float Game::deltaTime;
+bool Game::gamePaused = false;
 
 PlayerController* Game::player;
 EnemyManager* Game::enemyManager;
 
+;
 
 Game::Game() {
 
 }
 
 Game::~Game() {
-	
+	TextManager::CleanUp();
 }
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) {
@@ -45,6 +48,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			SDL_SetRenderDrawColor(renderer, 20, 20,20 , 255);
 			std::cout << "Renderer created!" << std::endl;
 		}
+
+		// Initialising TextManager
+		TextManager::Init();
 
 		isRunning = true;
 
@@ -100,9 +106,10 @@ void Game::update() {
 void Game::render() {
 	SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
 	SDL_RenderClear(renderer);
-	
-	GameObject::RenderEverything();
 
+	GameObject::RenderEverything();
+	// Render all text
+	TextManager::Render();
 	SDL_RenderPresent(renderer);
 
 
@@ -113,4 +120,14 @@ void Game::clean() {
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	std::cout << "Game cleaned!" << std::endl;
+}
+
+void Game::GameOver()
+{
+	for (GameObject * go : GameObject::gameobjects) {
+		GameObject::DestroyGameObject(go, 10);
+
+	}
+
+	TextManager::AddText(WIDTH / 2, HEIGHT / 2, "Game Over!");
 }

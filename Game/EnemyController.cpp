@@ -27,10 +27,13 @@ void EnemyController::Update()
 void EnemyController::Render() {
 	GameObject::Render();
 
-	/*SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
-	SDL_RenderDrawLine(Game::renderer, xStart + (textureWidth * textureUpscale)/2, 0, xStart + (textureWidth * textureUpscale) / 2, 100);
-	SDL_SetRenderDrawColor(Game::renderer, 255, 10, 10, 255);
-	SDL_RenderDrawLine(Game::renderer, Game::WIDTH/2, 0, Game::WIDTH/2, 400);*/
+	if (canShoot) {
+		SDL_SetRenderDrawColor(Game::renderer, 0, 255, 0, 255);
+		SDL_RenderDrawRect(Game::renderer, &collisionBox);
+	}
+
+	
+	
 
 }
 
@@ -44,6 +47,10 @@ void EnemyController::Destroy()
 	newParams.animationStartTick = SDL_GetTicks();
 	GameObject::ChangeAnimationParams(newParams);
 	animated = true;
+	// Passing the ability to shoot to other enemy
+	if (canShoot) {
+		Game::enemyManager->PassEnemyShootingAbility(enemyIndexX, enemyIndexY);
+	}
 	// Disabling collision so that no other bullet will try to collide and destroy the object
 	hasCollision = false;
 	// Adding enemy to destroy pool with delay
@@ -52,7 +59,7 @@ void EnemyController::Destroy()
 
 void EnemyController::AttemptShoot()
 {
-	int rng = rand() % 10;
+	int rng = rand() % 100;
 	if (rng < EnemyManager::enemyShootingChance) {
 		weapon->Shoot(x,y + (textureHeight * textureUpscale) + 1.0, 0.0f, EnemyManager::enemyBulletSpeed);
 	}

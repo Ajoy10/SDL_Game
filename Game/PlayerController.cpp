@@ -36,6 +36,17 @@ int PlayerController::weaponFireFreezeTime = 500; //ms
 	
 }
 
+ void PlayerController::TakeHit() {
+	 health--;
+	 std::cout << "Health: " << health << std::endl;
+	 // Update Health UI
+	 if (health == 0) {
+		 // Dead
+		 Game::GameOver();
+
+	 }
+ }
+
 
 
 

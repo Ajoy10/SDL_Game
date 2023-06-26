@@ -34,7 +34,18 @@ void Bullet::Collided(GameObject* go) {
 
 	}
 	else if (type == BulletType::ENEMY_BULLET) {
-		
+		if (enemy == NULL) {
+			PlayerController* player = dynamic_cast<PlayerController*>(go);
+
+			if (player != NULL) {
+				player->TakeHit();
+				std::cout << "Done!" << std::endl;
+			}
+			GameObject::DestroyGameObject((GameObject*)this);
+
+			
+
+		}
 	}
 
 }
