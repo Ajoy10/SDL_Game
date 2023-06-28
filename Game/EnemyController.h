@@ -25,7 +25,7 @@ private:
     static const float xTravel;
     void move();
 
-    Uint16 lastWeaponFire;
+    Uint32 lastWeaponFire;
 
 };
 

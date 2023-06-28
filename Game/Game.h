@@ -22,6 +22,8 @@ class Game
 		void clean();
 
 		static void GameOver();
+		static void GameWin();
+
 
 		bool running() { return isRunning; }
 
@@ -29,8 +31,11 @@ class Game
 		static SDL_Renderer* renderer;
 		static SDL_Event event;
 		static float deltaTime;
+		static const int playerZoneY;
 		
 		static bool gamePaused;
+
+		static bool displayGizmos;
 		// Game specific data
 		static PlayerController* player;
 		static EnemyManager* enemyManager;

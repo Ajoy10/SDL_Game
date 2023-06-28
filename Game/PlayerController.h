@@ -16,7 +16,7 @@ public:
     void TakeHit();
 private:
     float movementSpeed;
-    Uint16 lastWeaponFire;
+    Uint32 lastWeaponFire;
     static int weaponFireFreezeTime;
     void move(float xInput);
     int health = 3;

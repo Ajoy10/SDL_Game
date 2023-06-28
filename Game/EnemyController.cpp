@@ -3,7 +3,7 @@
 #include "EnemyManager.h"
 
 const float EnemyController::xTravel = Game::WIDTH/4;
-const int EnemyController::horizontalMovementTriggerCount = 3;
+const int EnemyController::horizontalMovementTriggerCount = 1;
 
 
 
@@ -27,11 +27,13 @@ void EnemyController::Update()
 void EnemyController::Render() {
 	GameObject::Render();
 
-	if (canShoot) {
-		SDL_SetRenderDrawColor(Game::renderer, 0, 255, 0, 255);
-		SDL_RenderDrawRect(Game::renderer, &collisionBox);
-	}
+	if (Game::displayGizmos) {
 
+		if (canShoot) {
+			SDL_SetRenderDrawColor(Game::renderer, 0, 255, 0, 255);
+			SDL_RenderDrawRect(Game::renderer, &collisionBox);
+		}
+	}
 	
 	
 
@@ -51,6 +53,8 @@ void EnemyController::Destroy()
 	if (canShoot) {
 		Game::enemyManager->PassEnemyShootingAbility(enemyIndexX, enemyIndexY);
 	}
+	Game::enemyManager->EnemyDead(this);
+
 	// Disabling collision so that no other bullet will try to collide and destroy the object
 	hasCollision = false;
 	// Adding enemy to destroy pool with delay
@@ -63,7 +67,7 @@ void EnemyController::AttemptShoot()
 	if (rng < EnemyManager::enemyShootingChance) {
 		weapon->Shoot(x,y + (textureHeight * textureUpscale) + 1.0, 0.0f, EnemyManager::enemyBulletSpeed);
 	}
-	lastWeaponFire = SDL_GetTicks();
+	lastWeaponFire = SDL_GetTicks() + rand()%100; // Adding a small randomness so that the enemy shooting looks more varied
 
 }
 
@@ -90,5 +94,10 @@ void EnemyController::move() {
 	if (horizontalMovementCounter >= EnemyController::horizontalMovementTriggerCount) {
 		y += textureHeight*textureUpscale;
 		horizontalMovementCounter = 0;
+	}
+
+	// Checking whether enemy has crossed the player line
+	if (y > Game::playerZoneY) {
+		Game::GameOver();
 	}
 }

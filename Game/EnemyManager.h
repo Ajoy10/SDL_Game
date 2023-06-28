@@ -15,8 +15,8 @@ public:
 	~EnemyManager();
 	void Init();
 	//void Update();
-	void Render();
 
+	void EnemyDead(EnemyController*);
 	void PassEnemyShootingAbility(int indexX, int indexY);
 private:
 	static int maxInALayer;

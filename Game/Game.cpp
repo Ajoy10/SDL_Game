@@ -3,6 +3,8 @@
 #include "PlayerController.h"
 #include "EnemyManager.h"
 #include "TextManager.h";
+#include "Text.h";
+
 
 Uint32 lastTicks;
 
@@ -12,6 +14,10 @@ int frame;
 const int Game::WIDTH = 1024;
 const int Game::HEIGHT = 720;
 
+const int Game::playerZoneY = (Game::HEIGHT * .75f) - 100;
+
+bool Game::displayGizmos = false;
+
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 float Game::deltaTime;
@@ -20,7 +26,6 @@ bool Game::gamePaused = false;
 PlayerController* Game::player;
 EnemyManager* Game::enemyManager;
 
-;
 
 Game::Game() {
 
@@ -110,9 +115,15 @@ void Game::render() {
 	GameObject::RenderEverything();
 	// Render all text
 	TextManager::Render();
+
+	// Render player zone gizmo
+	if (displayGizmos) {
+		SDL_RenderDrawLine(renderer, 0, Game::playerZoneY, Game::WIDTH, Game::playerZoneY);
+	}
+
 	SDL_RenderPresent(renderer);
 
-
+	
 }
 
 void Game::clean() {
@@ -129,5 +140,19 @@ void Game::GameOver()
 
 	}
 
-	TextManager::AddText(WIDTH / 2, HEIGHT / 2, "Game Over!");
+	Text* gameOverText = TextManager::AddText(WIDTH / 2, HEIGHT / 2, "Game Over!");
+	gameOverText->SetScale(2 ,2);
+}
+
+
+void Game::GameWin()
+{
+	for (GameObject* go : GameObject::gameobjects) {
+		GameObject::DestroyGameObject(go, 10);
+	}
+
+	Text* gameWinText = TextManager::AddText(WIDTH / 2, HEIGHT / 2, "You won the game!");
+	gameWinText->SetScale(2, 2);
+	Text* scoreText = TextManager::AddText(WIDTH / 2, HEIGHT / 2 + 50, "Score");
+	scoreText->SetScale(1.2f, 1.2f);
 }

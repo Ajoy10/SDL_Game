@@ -44,8 +44,8 @@ void Text::ChangeText(const char* text)
 void Text::render()
 {
 	SDL_Rect dest;
-	dest.x = x - (surface->w / 2); // made the pivot point to center
-	dest.y = y - (surface->h / 2);
+	dest.x = x - (surface->w * scaleX / 2); // made the pivot point to center
+	dest.y = y - (surface->h * scaleY / 2);
 	dest.w = surface->w * scaleX;
 	dest.h = surface->h * scaleY;
 
