@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "Bullet.h"
 #include "Weapon.h"
+#include "MediaManager.h"
 
 
 int EnemyManager::maxInALayer = 6;

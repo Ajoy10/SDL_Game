@@ -3,6 +3,7 @@
 #include "PlayerController.h"
 #include "EnemyManager.h"
 #include "TextManager.h";
+#include "MediaManager.h";
 #include "Text.h";
 
 
@@ -54,10 +55,17 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			std::cout << "Renderer created!" << std::endl;
 		}
 
+		// Initialising MediaManager
+		MediaManager::Init();
+
 		// Initialising TextManager
 		TextManager::Init();
 
 		isRunning = true;
+
+		// Loading all the Sound effects
+		MediaManager::LoadAudio("assets/explosion.wav", "explosion");
+		MediaManager::LoadAudio("assets/laser.wav", "laser_shooting");
 
 		player = new PlayerController("assets/player_anim.png", Game::WIDTH/2, Game::HEIGHT - 200);
 		
@@ -127,6 +135,7 @@ void Game::render() {
 }
 
 void Game::clean() {
+	MediaManager::CleanUp();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

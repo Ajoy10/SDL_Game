@@ -1,6 +1,7 @@
 #include "EnemyController.h"
 #include "Weapon.h"
 #include "EnemyManager.h"
+#include "MediaManager.h"
 
 const float EnemyController::xTravel = Game::WIDTH/4;
 const int EnemyController::horizontalMovementTriggerCount = 1;
@@ -57,6 +58,7 @@ void EnemyController::Destroy()
 
 	// Disabling collision so that no other bullet will try to collide and destroy the object
 	hasCollision = false;
+	MediaManager::PlayAudioOnce("explosion");
 	// Adding enemy to destroy pool with delay
 	GameObject::DestroyGameObject(this, 450);
 }
@@ -65,7 +67,10 @@ void EnemyController::AttemptShoot()
 {
 	int rng = rand() % 100;
 	if (rng < EnemyManager::enemyShootingChance) {
-		weapon->Shoot(x,y + (textureHeight * textureUpscale) + 1.0, 0.0f, EnemyManager::enemyBulletSpeed);
+		bool shot = weapon->Shoot(x,y + (textureHeight * textureUpscale) + 1.0, 0.0f, EnemyManager::enemyBulletSpeed);
+		if (shot) {
+			MediaManager::PlayAudioOnce("laser_shooting");
+		}
 	}
 	lastWeaponFire = SDL_GetTicks() + rand()%100; // Adding a small randomness so that the enemy shooting looks more varied
 
