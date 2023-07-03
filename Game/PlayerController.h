@@ -14,6 +14,7 @@ public:
     Text* healthText;
     void Update();
     void TakeHit();
+    int GetHealth() { return health; }
 private:
     float movementSpeed;
     Uint32 lastWeaponFire;

@@ -7,7 +7,7 @@
 class PlayerController;
 class EnemyManager;
 
-
+class Text;
 class Game
 {
 	public:
@@ -32,7 +32,10 @@ class Game
 		static SDL_Event event;
 		static float deltaTime;
 		static const int playerZoneY;
-		
+		static Uint32 score;
+		static void ReduceScore(int reduction);
+		static Text* liveScoreText;
+
 		static bool gamePaused;
 
 		static bool displayGizmos;

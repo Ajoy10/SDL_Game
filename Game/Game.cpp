@@ -5,7 +5,7 @@
 #include "TextManager.h";
 #include "MediaManager.h";
 #include "Text.h";
-
+#include <string>
 
 Uint32 lastTicks;
 
@@ -16,6 +16,9 @@ const int Game::WIDTH = 1024;
 const int Game::HEIGHT = 720;
 
 const int Game::playerZoneY = (Game::HEIGHT * .75f) - 100;
+
+Uint32 Game::score = 100000/3;
+Text* Game::liveScoreText = NULL;
 
 bool Game::displayGizmos = false;
 
@@ -66,11 +69,20 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		// Loading all the Sound effects
 		MediaManager::LoadAudio("assets/explosion.wav", "explosion");
 		MediaManager::LoadAudio("assets/laser.wav", "laser_shooting");
+		MediaManager::LoadAudio("assets/laser_enemy.wav", "enemy_shooting");
+		MediaManager::LoadAudio("assets/win.wav", "win");
+		MediaManager::LoadAudio("assets/gameover.wav", "gameover");
+
+
+
 
 		player = new PlayerController("assets/player_anim.png", Game::WIDTH/2, Game::HEIGHT - 200);
 		
 		enemyManager = new EnemyManager(33);
 		enemyManager->Init();
+
+		// Live score Text
+		liveScoreText = TextManager::AddText(Game::WIDTH * .7, Game::HEIGHT - 40, std::string("Score: ").append(std::to_string(score)).c_str());
 	}
 	else {
 		isRunning = false;
@@ -149,6 +161,10 @@ void Game::GameOver()
 
 	}
 
+	delete liveScoreText;
+	liveScoreText = NULL;
+	// Gameover sound effect
+	MediaManager::PlayAudioOnce("gameover");
 	Text* gameOverText = TextManager::AddText(WIDTH / 2, HEIGHT / 2, "Game Over!");
 	gameOverText->SetScale(2 ,2);
 }
@@ -159,9 +175,31 @@ void Game::GameWin()
 	for (GameObject* go : GameObject::gameobjects) {
 		GameObject::DestroyGameObject(go, 10);
 	}
-
+	delete liveScoreText;
+	liveScoreText = NULL;
+	// Win sound effect
+	MediaManager::PlayAudioOnce("win");
+	score = score * player->GetHealth(); // Multiply the score with remaining player health
 	Text* gameWinText = TextManager::AddText(WIDTH / 2, HEIGHT / 2, "You won the game!");
 	gameWinText->SetScale(2, 2);
-	Text* scoreText = TextManager::AddText(WIDTH / 2, HEIGHT / 2 + 50, "Score");
+	Text* scoreText = TextManager::AddText(WIDTH / 2, HEIGHT / 2 + 50, std::string("Score: ").append(std::to_string(score)).c_str());
 	scoreText->SetScale(1.2f, 1.2f);
+}
+
+void Game::ReduceScore(int reduction)
+{
+	if (score > 0)
+	{
+		if (reduction >= score) {
+			score = 0;
+		}
+		else {
+			score -= reduction;
+		}
+		// Update Score Text
+		liveScoreText->ChangeText(std::string("Score: ").append(std::to_string(score)).c_str());
+
+		
+	}
+
 }

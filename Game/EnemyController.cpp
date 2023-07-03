@@ -5,6 +5,8 @@
 
 const float EnemyController::xTravel = Game::WIDTH/4;
 const int EnemyController::horizontalMovementTriggerCount = 1;
+int EnemyController::timeDeductDelta = 1500; // 1.5s
+
 
 
 
@@ -23,6 +25,13 @@ void EnemyController::Update()
 	if (canShoot && SDL_GetTicks() > lastWeaponFire + EnemyManager::weaponFireFreezeTime) {
 		AttemptShoot();
 	}
+
+	if (SDL_GetTicks() > (lastScoreDeductTick + timeDeductDelta)) {
+		Game::ReduceScore(5);
+		lastScoreDeductTick = SDL_GetTicks();
+	}
+
+
 }
 
 void EnemyController::Render() {
@@ -69,7 +78,7 @@ void EnemyController::AttemptShoot()
 	if (rng < EnemyManager::enemyShootingChance) {
 		bool shot = weapon->Shoot(x,y + (textureHeight * textureUpscale) + 1.0, 0.0f, EnemyManager::enemyBulletSpeed);
 		if (shot) {
-			MediaManager::PlayAudioOnce("laser_shooting");
+			MediaManager::PlayAudioOnce("enemy_shooting");
 		}
 	}
 	lastWeaponFire = SDL_GetTicks() + rand()%100; // Adding a small randomness so that the enemy shooting looks more varied
