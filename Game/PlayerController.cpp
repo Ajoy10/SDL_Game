@@ -55,6 +55,8 @@ int PlayerController::weaponFireFreezeTime = 500; //ms
 	 health--;
 	 std::cout << "Health: " << health << std::endl;
 	 healthText->ChangeText(std::string("Health: ").append(std::to_string(health)).c_str());
+	 MediaManager::PlayAudioOnce("damage");
+
 	 // Update Health UI
 	 if (health == 0) {
 		 // Dead

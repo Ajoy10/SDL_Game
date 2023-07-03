@@ -72,6 +72,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		MediaManager::LoadAudio("assets/laser_enemy.wav", "enemy_shooting");
 		MediaManager::LoadAudio("assets/win.wav", "win");
 		MediaManager::LoadAudio("assets/gameover.wav", "gameover");
+		MediaManager::LoadAudio("assets/damage.wav", "damage");
+
 
 
 
