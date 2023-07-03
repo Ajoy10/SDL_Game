@@ -84,7 +84,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		enemyManager->Init();
 
 		// Live score Text
-		liveScoreText = TextManager::AddText(Game::WIDTH * .7, Game::HEIGHT - 40, std::string("Score: ").append(std::to_string(score)).c_str());
+		liveScoreText = TextManager::AddText(Game::WIDTH * .85, Game::HEIGHT - 40, std::string("Score: ").append(std::to_string(score)).c_str());
 	}
 	else {
 		isRunning = false;
