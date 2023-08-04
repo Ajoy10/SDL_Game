@@ -60,8 +60,7 @@ Feel free to customize and enhance the game according to your preferences and le
 
 ## :hourglass_flowing_sand: Progress
 
-![Two enemies on screen bouncing horizontally and player character moving with input](readme_files/progress_3.gif)
-
+![Two enemies on screen bouncing horizontally and player character moving with input](readme_files/progress.gif)
 ## :books: Resources
 
 - [SDL2 Documentation](https://wiki.libsdl.org/)
