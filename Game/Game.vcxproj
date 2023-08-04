@@ -26,7 +26,9 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/mwindows %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
     <ClCompile Include="MediaManager.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -176,6 +178,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);%(AdditionalDependencies);SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib</AdditionalDependencies>
+      <AdditionalOptions>/SUBSYSTEM:WINDOWS %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>start xcopy /i /y assets\ "$(TargetDir)assets\" &amp;&amp; echo "Copied assets!"
