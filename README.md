@@ -69,6 +69,9 @@ Feel free to customize and enhance the game according to your preferences and le
 - [Lazy Foo' Productions SDL2 tutorials](https://lazyfoo.net/tutorials/SDL/index.php)
 - [How To Make A Game In C++ & SDL2 From Scratch! by Let's Make Games](https://youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx)
 
+## :raised_hands: Credits
+- Laser shooting audio - [laser3 by nsstudios](https://freesound.org/s/344276/)
+
 ## :page_facing_up: License
 
 This project is licensed under the **MIT License**. Feel free to use and modify the code for personal or educational purposes.

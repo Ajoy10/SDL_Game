@@ -1,14 +1,24 @@
 #include "EnemyManager.h"
 #include "Bullet.h"
 #include "Weapon.h"
+#include "MediaManager.h"
 
 
 int EnemyManager::maxInALayer = 6;
-int EnemyManager::enemyShootingChance = 5;
+int EnemyManager::enemyShootingChance = 10;
 float EnemyManager::enemyBulletSpeed = 200.0f;
-int EnemyManager::weaponFireFreezeTime = 1000;
+int EnemyManager::weaponFireFreezeTime = 2000; // 2 second
 
 
+
+void EnemyManager::EnemyDead(EnemyController* enemy)
+{
+	enemies.erase(std::find(enemies.begin(), enemies.end(), enemy));
+	std::cout << "EnemyManager::EnemyDead()" << enemies.size() << std::endl;
+	if (enemies.size() == 0) {
+		Game::GameWin();
+	}
+}
 
 void EnemyManager::PassEnemyShootingAbility(int indexX, int indexY)
 {
@@ -27,7 +37,7 @@ void EnemyManager::PassEnemyShootingAbility(int indexX, int indexY)
 	}
 
 	// Also increase the rate of firing
-	EnemyManager::enemyShootingChance += 2;
+	EnemyManager::enemyShootingChance += 1;
 }
 
 EnemyManager::EnemyManager(int totalEnemies)
@@ -74,9 +84,3 @@ void EnemyManager::Init()
 //	}
 //}
 
-void EnemyManager::Render()
-{
-	for (int i = 0; i < enemies.size(); i++) {
-		enemies.at(i)->Render();
-	}
-}

@@ -14,9 +14,10 @@ public:
     Text* healthText;
     void Update();
     void TakeHit();
+    int GetHealth() { return health; }
 private:
     float movementSpeed;
-    Uint16 lastWeaponFire;
+    Uint32 lastWeaponFire;
     static int weaponFireFreezeTime;
     void move(float xInput);
     int health = 3;

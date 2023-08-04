@@ -21,11 +21,13 @@ private:
     short int direction = 1;
     short int horizontalMovementCounter = 0;
     static const int horizontalMovementTriggerCount;
+    static int timeDeductDelta;
     const float xStart;
     static const float xTravel;
     void move();
 
-    Uint16 lastWeaponFire;
+    Uint32 lastWeaponFire;
+    Uint32 lastScoreDeductTick;
 
 };
 

@@ -6,6 +6,8 @@ bool Weapon::Shoot(float x, float y, float xDelta, float yDelta) {
 	{
 		Bullet *b = new Bullet(x, y, xDelta, yDelta, bulletType);
 		usedBulletsCount++;
+		if(usedBulletsCount == maxBullets)
+			std::cout << "Weapon::Shoot()" << " Weapon ran out of bullets at "<< SDL_GetTicks() << " Max="<< UINT16_MAX << std::endl;
 		return true;
 	}
 	else {

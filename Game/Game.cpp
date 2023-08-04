@@ -3,6 +3,9 @@
 #include "PlayerController.h"
 #include "EnemyManager.h"
 #include "TextManager.h";
+#include "MediaManager.h";
+#include "Text.h";
+#include <string>
 
 Uint32 lastTicks;
 
@@ -12,6 +15,13 @@ int frame;
 const int Game::WIDTH = 1024;
 const int Game::HEIGHT = 720;
 
+const int Game::playerZoneY = (Game::HEIGHT * .75f) - 100;
+
+Uint32 Game::score = 100000/3;
+Text* Game::liveScoreText = NULL;
+
+bool Game::displayGizmos = false;
+
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 float Game::deltaTime;
@@ -20,7 +30,6 @@ bool Game::gamePaused = false;
 PlayerController* Game::player;
 EnemyManager* Game::enemyManager;
 
-;
 
 Game::Game() {
 
@@ -49,15 +58,33 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			std::cout << "Renderer created!" << std::endl;
 		}
 
+		// Initialising MediaManager
+		MediaManager::Init();
+
 		// Initialising TextManager
 		TextManager::Init();
 
 		isRunning = true;
 
+		// Loading all the Sound effects
+		MediaManager::LoadAudio("assets/explosion.wav", "explosion");
+		MediaManager::LoadAudio("assets/laser.wav", "laser_shooting");
+		MediaManager::LoadAudio("assets/laser_enemy.wav", "enemy_shooting");
+		MediaManager::LoadAudio("assets/win.wav", "win");
+		MediaManager::LoadAudio("assets/gameover.wav", "gameover");
+		MediaManager::LoadAudio("assets/damage.wav", "damage");
+
+
+
+
+
 		player = new PlayerController("assets/player_anim.png", Game::WIDTH/2, Game::HEIGHT - 200);
 		
 		enemyManager = new EnemyManager(33);
 		enemyManager->Init();
+
+		// Live score Text
+		liveScoreText = TextManager::AddText(Game::WIDTH * .85, Game::HEIGHT - 40, std::string("Score: ").append(std::to_string(score)).c_str());
 	}
 	else {
 		isRunning = false;
@@ -110,12 +137,19 @@ void Game::render() {
 	GameObject::RenderEverything();
 	// Render all text
 	TextManager::Render();
+
+	// Render player zone gizmo
+	if (displayGizmos) {
+		SDL_RenderDrawLine(renderer, 0, Game::playerZoneY, Game::WIDTH, Game::playerZoneY);
+	}
+
 	SDL_RenderPresent(renderer);
 
-
+	
 }
 
 void Game::clean() {
+	MediaManager::CleanUp();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
@@ -129,5 +163,45 @@ void Game::GameOver()
 
 	}
 
-	TextManager::AddText(WIDTH / 2, HEIGHT / 2, "Game Over!");
+	delete liveScoreText;
+	liveScoreText = NULL;
+	// Gameover sound effect
+	MediaManager::PlayAudioOnce("gameover");
+	Text* gameOverText = TextManager::AddText(WIDTH / 2, HEIGHT / 2, "Game Over!");
+	gameOverText->SetScale(2 ,2);
+}
+
+
+void Game::GameWin()
+{
+	for (GameObject* go : GameObject::gameobjects) {
+		GameObject::DestroyGameObject(go, 10);
+	}
+	delete liveScoreText;
+	liveScoreText = NULL;
+	// Win sound effect
+	MediaManager::PlayAudioOnce("win");
+	score = score * player->GetHealth(); // Multiply the score with remaining player health
+	Text* gameWinText = TextManager::AddText(WIDTH / 2, HEIGHT / 2, "You won the game!");
+	gameWinText->SetScale(2, 2);
+	Text* scoreText = TextManager::AddText(WIDTH / 2, HEIGHT / 2 + 50, std::string("Score: ").append(std::to_string(score)).c_str());
+	scoreText->SetScale(1.2f, 1.2f);
+}
+
+void Game::ReduceScore(int reduction)
+{
+	if (score > 0)
+	{
+		if (reduction >= score) {
+			score = 0;
+		}
+		else {
+			score -= reduction;
+		}
+		// Update Score Text
+		liveScoreText->ChangeText(std::string("Score: ").append(std::to_string(score)).c_str());
+
+		
+	}
+
 }

@@ -108,9 +108,11 @@ void GameObject::Collided(GameObject* go)
 
 void GameObject::Render() {
 	SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &destRect);
-	if (hasCollision) {
-		SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 255);
-		SDL_RenderDrawRect(Game::renderer, &collisionBox);
+	if (Game::displayGizmos) {
+		if (hasCollision) {
+			SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 255);
+			SDL_RenderDrawRect(Game::renderer, &collisionBox);
+		}
 	}
 }
 

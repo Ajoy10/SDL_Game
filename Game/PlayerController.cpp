@@ -1,5 +1,6 @@
 #include "PlayerController.h"
 #include "TextManager.h"
+#include "MediaManager.h"
 #include "Text.h"
 
 #include <string>
@@ -38,8 +39,11 @@ int PlayerController::weaponFireFreezeTime = 500; //ms
 
 	 if (Input::GetKeyDown(SDL_SCANCODE_SPACE) && (SDL_GetTicks() > lastWeaponFire + PlayerController::weaponFireFreezeTime)) {
 		 //std::cout << " SPACE pressed" << std::endl;
-		 weapon.Shoot(x + (textureWidth * textureUpscale) / 3.5f, y - (textureHeight * textureUpscale)/2, 0.0f, -200.0f);
-		 lastWeaponFire = SDL_GetTicks();
+		 bool shot = weapon.Shoot(x + (textureWidth * textureUpscale) / 3.5f, y - (textureHeight * textureUpscale)/2, 0.0f, -200.0f);
+		 if (shot) {
+			 lastWeaponFire = SDL_GetTicks();
+			 MediaManager::PlayAudioOnce("laser_shooting");
+		 }
 	 }
 	 move(xInput);
 	 //weapon.Update();
@@ -51,6 +55,8 @@ int PlayerController::weaponFireFreezeTime = 500; //ms
 	 health--;
 	 std::cout << "Health: " << health << std::endl;
 	 healthText->ChangeText(std::string("Health: ").append(std::to_string(health)).c_str());
+	 MediaManager::PlayAudioOnce("damage");
+
 	 // Update Health UI
 	 if (health == 0) {
 		 // Dead
